@@ -1,0 +1,11 @@
+.venv/ 
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Pipenv
+Pipfile.lock
+
+.vscode/
