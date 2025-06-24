@@ -1,4 +1,3 @@
-from datetime import date
 from config.database import db
 
 class Deputado(db.Model):
@@ -9,7 +8,7 @@ class Deputado(db.Model):
     uf= db.Column(db.String(2), nullable= False)
     cpf= db.Column(db.String(20), unique= True)
     partido= db.Column(db.String(20))
-    despesas= db.relationship('Dispesa', backref= 'deputado', lazy= True)
+    despesas= db.relationship('Despesa', backref= 'deputado', lazy= True)
 
 class Despesa(db.Model):
     __tablename__= 'despesas'
@@ -19,4 +18,4 @@ class Despesa(db.Model):
     fornecedor= db.Column(db.String(150))
     valorLiquido= db.Column(db.Float)
     urlDocumento= db.Column(db.String(300))
-    deputado_id= db.Column(db.Integer, db.ForeignKey('deputados.id', nullable= False))
+    deputado_id= db.Column(db.Integer, db.ForeignKey('deputados.id'), nullable= False)

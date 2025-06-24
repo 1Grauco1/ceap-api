@@ -1,6 +1,6 @@
 from flask import Flask
 from config.database import init_db, db
-#from models.entities import Deputado, Despesa
+from routes.upload_ceap import upload_bp
 
 def creat_app():
     app= Flask(__name__)
@@ -10,6 +10,8 @@ def creat_app():
     def index():
         return 'API CEAP conectada com DB PORRA'
     
+    app.register_blueprint(upload_bp)
+
     with app.app_context():
         db.create_all()
     
