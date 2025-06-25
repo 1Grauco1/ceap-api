@@ -42,3 +42,35 @@ def converter_data(data_str):
         return datetime.strptime(data_str, '%d/%m/%Y').date() if data_str else None
     except ValueError:
         return None
+    
+def list_deputados_uf(uf= None):
+    query= Deputado.query
+
+    if(uf):
+        query= query.filter_by(uf= uf.upper())
+
+    deputados= query.all()
+
+    return[{
+            'id': dp.id,
+            'nome': dp.nome,
+            'cpf':dp.cpf,
+            'partido': dp.partido,
+            'uf': dp.uf
+        } for dp in deputados
+    ] 
+
+def list_despesas_dp(deputado_id):
+    despesas = Despesa.query.filter_by(deputado_id=deputado_id).all()
+
+    return [{
+        'dataEmissao': dp.dataEmissao.strftime('%d/%m/%Y') if dp.dataEmissao else None,
+        'fornecedor': dp.fornecedor,
+        'valorLiquido': dp.valorLiquido,
+        'urlDocumento': dp.urlDocumento
+    } for dp in despesas
+    ]
+
+def calc_total_despesas():
+    total= db.session.query(db.func.sum(Despesa.valorLiquido)).scalar()
+    return float(total) if total else 0.0

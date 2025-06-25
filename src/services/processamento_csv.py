@@ -13,7 +13,7 @@ def baixar_csv():
         return pd.read_csv(csv_data, sep=';', encoding='latin1')
     
     except requests.exceptions.RequestException as e:
-        raise Exception(f"Erro ao baixar CSV da Câmara: {str(e)}")
+        raise Exception(f"Erro: {str(e)}")
 
 def filtrar_e_converter_dados(df):
     if df.empty:
