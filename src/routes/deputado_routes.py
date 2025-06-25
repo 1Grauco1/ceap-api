@@ -18,7 +18,7 @@ def get_despesas_dp(deputado_id):
     despesas= list_despesas_dp(deputado_id)
     return jsonify(despesas)
 
-@deputado_bp.route('/total-depesas')
+@deputado_bp.route('/total-despesas')
 def get_total_despesas():
     total= calc_total_despesas()
     return jsonify(total)
