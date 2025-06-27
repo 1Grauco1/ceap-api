@@ -9,7 +9,7 @@ def create_app():
 
     @app.route('/')
     def index():
-        return 'API CEAP conectada com DB PORRA'
+        return 'API CEAP'
     
     app.register_blueprint(upload_bp)
     app.register_blueprint(deputado_bp)

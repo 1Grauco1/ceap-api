@@ -1,25 +1,11 @@
 import pandas as pd
-import requests
-from io import BytesIO
-from zipfile import ZipFile
-
-URL_CSV= "https://www.camara.leg.br/cotas/Ano-2025.csv.zip"
+import os
+CAMINHO_CSV= 'data/Ano-2025.csv'
 
 def baixar_csv():
-    response = requests.get(URL_CSV, timeout=30)
-    response.raise_for_status()
-    
-    with ZipFile(BytesIO(response.content)) as zip_file:
-        csv_filename = [f for f in zip_file.namelist() if f.endswith('.csv')][0]
-        with zip_file.open(csv_filename) as csv_file:
-            df = pd.read_csv(
-                csv_file, 
-                sep=';', 
-                encoding='latin1',
-                dtype={'cpf': str},  
-                parse_dates=['dataEmissao'],  
-                dayfirst=True 
-            )
+    if not os.path.exists(CAMINHO_CSV):
+        raise FileNotFoundError(f'O arquivo {CAMINHO_CSV} não foi encontrado.')
+    df = pd.read_csv(CAMINHO_CSV, sep=';', encoding='latin1', low_memory=False)
     return df
 
 def filtrar_e_converter_dados(dp):
